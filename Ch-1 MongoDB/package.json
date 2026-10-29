@@ -1,0 +1,16 @@
+{
+  "name": "ch-1-mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.3.0",
+    "mongoose": "^9.11.2",
+    "nodemon": "^3.1.14"
+  }
+}
