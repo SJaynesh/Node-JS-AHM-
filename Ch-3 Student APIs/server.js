@@ -24,35 +24,68 @@ app.post('/addStudent', async (req, res) => {
 
     console.log("New Student : ", newStudent);
 
-    if (newStudent) {
-        return res.status(201).json({
-            status: 201,
-            message: "Student added successfully..",
-            error: false
-        });
-    } else {
+    if (!newStudent) {
         return res.status(400).json({
             status: 400,
             message: "Student addion failed..",
             error: true
         });
     }
+
+    return res.status(201).json({
+        status: 201,
+        message: "Student added successfully..",
+        error: false
+    });
+
+    // if (newStudent) {
+    //     return res.status(201).json({
+    //         status: 201,
+    //         message: "Student added successfully..",
+    //         error: false
+    //     });
+    // } else {
+    //     return res.status(400).json({
+    //         status: 400,
+    //         message: "Student addion failed..",
+    //         error: true
+    //     });
+    // }
 });
 
-app.get('/viewStudents', (req, res) => {
+app.get('/viewStudents', async (req, res) => {
 
     // view logic
+
+    const allStudents = await Student.find();
+
+    console.log("All Students : ", allStudents);
 
     return res.status(200).json({
         status: 200,
         message: "Students fetched successfully..",
-        error: false
+        error: false,
+        allStudents
     });
 });
 
-app.delete('/deleteStudent', (req, res) => {
+app.delete('/deleteStudent', async (req, res) => { 
 
     // delete logic
+    console.log(req.query);//{name : "Jaynesh", age : "21", course : "Software Developer"}
+    console.log(req.query.id);
+
+    const userId = req.query.id;
+
+    const deletedStudent = await Student.findByIdAndDelete(userId);
+
+    if (!deletedStudent) {
+        return res.status(400).json({
+            status: 400,
+            message: "Student deletion failed..",
+            error: false
+        });
+    }
 
     return res.status(200).json({
         status: 200,
